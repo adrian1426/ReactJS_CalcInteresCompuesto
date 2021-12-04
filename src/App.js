@@ -1,4 +1,5 @@
 import { Formik, Form } from 'formik';
+import Button from './components/Button';
 import Container from "./components/Container";
 import Input from './components/Input';
 import Section from "./components/Section";
@@ -43,6 +44,8 @@ function App() {
               name='rate'
               label='Interés estimado'
             />
+
+            <Button>Calcular</Button>
           </Form>
         </Formik>
       </Section>
