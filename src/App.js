@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 import Button from './components/Button';
 import Container from "./components/Container";
 import Input from './components/Input';
@@ -11,6 +12,13 @@ const initialState = {
   contribution: '',
   years: '',
   rate: ''
+};
+
+const validationScheYup = {
+  deposit: Yup.number().required('Obligatorio deposito').typeError('Debe ser numérico'),
+  contribution: Yup.number().required('Obligatorio contribucion').typeError('Debe ser numérico'),
+  years: Yup.number().required('Obligatorio años').typeError('Debe ser numérico'),
+  rate: Yup.number().required('Obligatorio impuesto').typeError('Debe ser numérico').min(0, 'el valor minimo es 0').max(1, 'El valor máximo es 1'),
 };
 
 const compoundInterest = (deposit, contribution, years, rate) => {
@@ -45,6 +53,7 @@ function App() {
         <Formik
           initialValues={initialState}
           onSubmit={handleSubmit}
+          validationSchema={Yup.object(validationScheYup)}
         >
           <Form>
             <Input
@@ -67,7 +76,7 @@ function App() {
               label='Interés estimado'
             />
 
-            <Button>Calcular</Button>
+            <Button type="submit">Calcular</Button>
           </Form>
         </Formik>
         {balance !== '' && <Balance>Balance final: {balance}</Balance>}
